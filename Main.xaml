@@ -95,7 +95,7 @@
           <av:Size x:Key="ShapeSize">200,66</av:Size>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence DisplayName="Main" sap:VirtualizedContainerService.HintSize="636,872" sap2010:WorkflowViewState.IdRef="Sequence_16">
+      <Sequence DisplayName="Main" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_16">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -329,9 +329,9 @@
         <FlowStep x:Name="__ReferenceID3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">330,217</av:Point>
+              <av:Point x:Key="ShapeLocation">310,227</av:Point>
               <av:Size x:Key="ShapeSize">200,66</av:Size>
-              <av:PointCollection x:Key="ConnectorLocation">430,217 430,187 317.5,187 317.5,183.5</av:PointCollection>
+              <av:PointCollection x:Key="ConnectorLocation">410,227 410,197 317.5,197 317.5,183.5</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <Sequence DisplayName="Options Menu" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_18">
@@ -360,7 +360,7 @@
           <av:Point x:Key="ShapeLocation">265,96.5</av:Point>
           <av:Size x:Key="ShapeSize">70,87</av:Size>
           <av:PointCollection x:Key="Start the RPAConnector">282.5,96.5 282.5,40 380,40</av:PointCollection>
-          <av:PointCollection x:Key="Default">282.5,183.5 282.5,250 330,250</av:PointCollection>
+          <av:PointCollection x:Key="Default">282.5,183.5 282.5,260 310,260</av:PointCollection>
           <x:String x:Key="DefaultCaseDisplayName">Options</x:String>
           <av:PointCollection x:Key="MenuConnector">265,161.75 235,161.75 235,213 120,213 120,183</av:PointCollection>
         </scg:Dictionary>
