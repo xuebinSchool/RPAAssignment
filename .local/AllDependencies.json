@@ -3538,15 +3538,15 @@
     ]
   },
   "packageFolders": {
-    "D:\\Users\\180605U\\.nuget\\packages\\": {}
+    "C:\\Users\\Potato\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
       "projectUniqueName": "Assignment",
       "projectName": "Assignment",
-      "projectPath": "D:\\Users\\180605U\\Desktop\\Github stuff\\RPAAssignment\\.local",
-      "packagesPath": "D:\\Users\\180605U\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\180605U\\Desktop\\Github stuff\\RPAAssignment\\.local"
+      "projectPath": "C:\\Users\\Potato\\Desktop\\Homework\\RPAAssignment\\.local",
+      "packagesPath": "C:\\Users\\Potato\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Potato\\Desktop\\Homework\\RPAAssignment\\.local"
     },
     "frameworks": {
       "net461": {
