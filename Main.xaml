@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1158,830" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1006,830" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="38">
       <x:String>System.Activities</x:String>
@@ -114,7 +114,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID2</x:Reference>
+      <x:Reference>__ReferenceID3</x:Reference>
     </Flowchart.StartNode>
     <FlowStep x:Name="__ReferenceID1">
       <sap:WorkflowViewStateService.ViewState>
@@ -199,7 +199,7 @@
                       </If.Else>
                     </If>
                   </Sequence>
-                  <Sequence DisplayName="Login to Medicial records" sap:VirtualizedContainerService.HintSize="832,1549" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                  <Sequence DisplayName="Login to Medicial records" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_13">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Int32" Default="1" Name="loginErrorExist" />
                     </Sequence.Variables>
@@ -337,7 +337,7 @@
         </Sequence>
       </Sequence>
       <FlowStep.Next>
-        <FlowDecision x:Name="__ReferenceID4" Condition="[passwordCorrect]" DisplayName="Is password wrong" sap:VirtualizedContainerService.HintSize="104,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+        <FlowDecision x:Name="__ReferenceID5" Condition="[passwordCorrect]" DisplayName="Is password wrong" sap:VirtualizedContainerService.HintSize="104,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -348,7 +348,7 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <FlowDecision.True>
-            <FlowStep x:Name="__ReferenceID5">
+            <FlowStep x:Name="__ReferenceID6">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">100,177</av:Point>
@@ -365,15 +365,22 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:CloseTab Browser="[globalHealthBrowser]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="507,22" sap2010:WorkflowViewState.IdRef="CloseTab_2" />
-                <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="507,291" sap2010:WorkflowViewState.IdRef="InputDialog_5" IsPassword="False" Label="The entered password is wrong. Select OK to return back to main menu, select Exit to end the program" Options="[{&quot;OK&quot;, &quot;Exit&quot;}]" Title="Password is wrong">
+                <ui:CloseTab Browser="[globalHealthBrowser]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="569,22" sap2010:WorkflowViewState.IdRef="CloseTab_2" />
+                <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="569,291" sap2010:WorkflowViewState.IdRef="InputDialog_5" IsPassword="False" Label="The entered password is wrong. Select OK to return back to main menu, select Exit to end the program" Options="[{&quot;OK&quot;, &quot;Exit&quot;}]" Title="Password is wrong">
                   <ui:InputDialog.Result>
                     <OutArgument x:TypeArguments="x:String">[passwordEndOption]</OutArgument>
                   </ui:InputDialog.Result>
                 </ui:InputDialog>
-                <If Condition="[passwordEndOption = &quot;Exit&quot;]" sap:VirtualizedContainerService.HintSize="507,208" sap2010:WorkflowViewState.IdRef="If_7">
+                <If Condition="[passwordEndOption = &quot;Exit&quot;]" sap:VirtualizedContainerService.HintSize="569,208" sap2010:WorkflowViewState.IdRef="If_7">
                   <If.Then>
-                    <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_4" Reason="User has ended the program" />
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[selectedOptions]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">Exit</InArgument>
+                      </Assign.Value>
+                    </Assign>
                   </If.Then>
                   <If.Else>
                     <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_8">
@@ -390,7 +397,7 @@
               <FlowStep.Next>
                 <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" DisplayName="Flow Switch" Expression="[selectedOptions]" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_2">
                   <FlowSwitch.Default>
-                    <FlowStep x:Name="__ReferenceID3">
+                    <FlowStep x:Name="__ReferenceID4">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <av:Point x:Key="ShapeLocation">100,437</av:Point>
@@ -413,9 +420,9 @@
                             <OutArgument x:TypeArguments="x:String">[settingsOptions]</OutArgument>
                           </ui:InputDialog.Result>
                         </ui:InputDialog>
-                        <If Condition="[settingsOptions=&quot;Change Configuration settings&quot;]" sap:VirtualizedContainerService.HintSize="942,1290" sap2010:WorkflowViewState.IdRef="If_14">
+                        <If Condition="[settingsOptions=&quot;Change Configuration settings&quot;]" sap:VirtualizedContainerService.HintSize="942,1590" sap2010:WorkflowViewState.IdRef="If_14">
                           <If.Then>
-                            <Sequence sap:VirtualizedContainerService.HintSize="570,1142" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                            <Sequence sap:VirtualizedContainerService.HintSize="570,1442" sap2010:WorkflowViewState.IdRef="Sequence_42">
                               <Sequence.Variables>
                                 <Variable x:TypeArguments="ui:WorkbookApplication" Name="configExcel" />
                               </Sequence.Variables>
@@ -424,20 +431,37 @@
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="528,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;RPA will now open the configuration file in excel, Please edit any settings in the settings sheet and do not touch the Default sheet. &quot; + Environment.NewLine +&#xD;&#xA;&quot;Once you are done Press Ctrl + S ONCE to save your configurations and RPA will continue&quot;]" />
-                              <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="528,951" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" Workbook="[configExcel]" WorkbookPath="config.xlsx">
+                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="528,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;RPA will now open the configuration file in excel, Please edit any settings in the settings sheet and do not touch the Default sheet. &quot; + Environment.NewLine +&#xA;&quot;Once you are done Press Ctrl + S ONCE to save your configurations and RPA will continue&quot;]" />
+                              <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="528,1251" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" Workbook="[configExcel]" WorkbookPath="config.xlsx">
                                 <ui:ExcelApplicationScope.Body>
                                   <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                                     <ActivityAction.Argument>
                                       <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
                                     </ActivityAction.Argument>
-                                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="494,842" sap2010:WorkflowViewState.IdRef="Sequence_41">
+                                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="494,1142" sap2010:WorkflowViewState.IdRef="Sequence_41">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
-                                      <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="452,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_3" />
+                                      <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="452,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
+                                      <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'excel.exe config.xlsx'" sap:VirtualizedContainerService.HintSize="452,260" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="07a0728ae1113acc954c91cc886d483b" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='config.xlsx - Excel' /&gt;">
+                                        <ui:WindowScope.Body>
+                                          <ActivityAction x:TypeArguments="x:Object">
+                                            <ActivityAction.Argument>
+                                              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                            </ActivityAction.Argument>
+                                            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_4" />
+                                            </Sequence>
+                                          </ActivityAction>
+                                        </ui:WindowScope.Body>
+                                      </ui:WindowScope>
                                       <ui:TriggerScope DisplayName="Trigger Scope" sap:VirtualizedContainerService.HintSize="452,688" sap2010:WorkflowViewState.IdRef="TriggerScope_1" SchedulingMode="Sequential">
                                         <ui:TriggerScope.Action>
                                           <ActivityAction x:TypeArguments="ui:EventInfoTriggerArgs">
@@ -470,7 +494,7 @@
                             </Sequence>
                           </If.Then>
                         </If>
-                        <If Condition="[settingsOptions=&quot;Reset configurations to default&quot;]" sap:VirtualizedContainerService.HintSize="942,1251" sap2010:WorkflowViewState.IdRef="If_23">
+                        <If Condition="[settingsOptions=&quot;Reset configurations to default&quot;]" sap:VirtualizedContainerService.HintSize="942,920" sap2010:WorkflowViewState.IdRef="If_23">
                           <If.Then>
                             <Sequence sap:VirtualizedContainerService.HintSize="797,772" sap2010:WorkflowViewState.IdRef="Sequence_44">
                               <Sequence.Variables>
@@ -530,9 +554,10 @@
                       <av:PointCollection x:Key="Default">500,363.5 500,421.04 200,421.04 200,437</av:PointCollection>
                       <x:String x:Key="DefaultCaseDisplayName">Options</x:String>
                       <av:PointCollection x:Key="MenuConnector">465,341.75 435,341.75 435,403 190,403 190,373</av:PointCollection>
+                      <av:PointCollection x:Key="ExitConnector">535,320 565,320 565,300 690,300</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <FlowStep x:Key="Menu" x:Name="__ReferenceID2">
+                  <FlowStep x:Key="Menu" x:Name="__ReferenceID3">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <av:Point x:Key="ShapeLocation">90,307</av:Point>
@@ -562,104 +587,137 @@
                           </InArgument>
                         </ui:ReadRange.Range>
                       </ui:ReadRange>
-                      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="484,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
-                        <ui:MultipleAssign.AssignOperations>
-                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_23">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_30">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_31">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_32">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_33">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                          </scg:List>
-                        </ui:MultipleAssign.AssignOperations>
-                      </ui:MultipleAssign>
+                      <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="484,664" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                        <TryCatch.Try>
+                          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="334,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                            <ui:MultipleAssign.AssignOperations>
+                              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_23">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_30">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_31">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_32">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_33">
+                                  <ui:AssignOperation.To>
+                                    <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
+                                  </ui:AssignOperation.To>
+                                  <ui:AssignOperation.Value>
+                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
+                                  </ui:AssignOperation.Value>
+                                </ui:AssignOperation>
+                              </scg:List>
+                            </ui:MultipleAssign.AssignOperations>
+                          </ui:MultipleAssign>
+                        </TryCatch.Try>
+                        <TryCatch.Catches>
+                          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,502" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ActivityAction x:TypeArguments="s:Exception">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="s:Exception" Name="missingConfigData" />
+                              </ActivityAction.Argument>
+                              <Sequence sap:VirtualizedContainerService.HintSize="376,433" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                <Sequence.Variables>
+                                  <Variable x:TypeArguments="sd:DataTable" Name="recoveryDt" />
+                                </Sequence.Variables>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="[&quot;config.xlsx settings sheeet might be corrupted, resetting to default...&quot;]" />
+                                <ui:ReadRange AddHeaders="False" DataTable="[recoveryDt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="Default" WorkbookPath="config.xlsx">
+                                  <ui:ReadRange.Range>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </ui:ReadRange.Range>
+                                </ui:ReadRange>
+                                <ui:WriteRange AddHeaders="False" DataTable="[recoveryDt]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Settings" StartingCell="A1" WorkbookPath="config.xlsx" />
+                              </Sequence>
+                            </ActivityAction>
+                          </Catch>
+                        </TryCatch.Catches>
+                      </TryCatch>
                       <If Condition="[selectedOptions=&quot;Start the RPA&quot;]" sap:VirtualizedContainerService.HintSize="484,386" sap2010:WorkflowViewState.IdRef="If_5">
                         <If.Then>
-                          <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,238" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="False" Label="Please enter the password required for authenication" Title="Login">
+                          <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,238" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="True" Label="Please enter the password required for authenication" Title="Login">
                             <ui:InputDialog.Result>
                               <OutArgument x:TypeArguments="x:String">[loginPassword]</OutArgument>
                             </ui:InputDialog.Result>
                           </ui:InputDialog>
-                        </If.Then>
-                      </If>
-                      <If Condition="[selectedOptions=&quot;Exit&quot;]" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_13">
-                        <If.Then>
-                          <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_6" Reason="User has ended the program" />
                         </If.Then>
                       </If>
                     </Sequence>
@@ -668,12 +726,28 @@
                     </FlowStep.Next>
                   </FlowStep>
                   <x:Reference>__ReferenceID1<x:Key>Start the RPA</x:Key></x:Reference>
+                  <FlowStep x:Key="Exit" x:Name="__ReferenceID2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <av:Point x:Key="ShapeLocation">690,267</av:Point>
+                        <av:Size x:Key="ShapeSize">200,66</av:Size>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Sequence DisplayName="Exit" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_7" Text="[&quot;RPA has ended&quot;]" />
+                    </Sequence>
+                  </FlowStep>
                 </FlowSwitch>
               </FlowStep.Next>
             </FlowStep>
           </FlowDecision.True>
           <FlowDecision.False>
-            <FlowStep x:Name="__ReferenceID6">
+            <FlowStep x:Name="__ReferenceID7">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">690,27</av:Point>
@@ -777,14 +851,15 @@
                 <ui:CloseTab Browser="[globalHealthBrowser]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="879,22" sap2010:WorkflowViewState.IdRef="CloseTab_1" />
               </Sequence>
               <FlowStep.Next>
-                <FlowStep x:Name="__ReferenceID7">
+                <FlowStep x:Name="__ReferenceID8">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <av:Point x:Key="ShapeLocation">690,157</av:Point>
                       <av:Size x:Key="ShapeSize">200,66</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">790,223 790,267</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Sequence DisplayName="Data Bank" sap:VirtualizedContainerService.HintSize="965,7645" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                  <Sequence DisplayName="Data Bank" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_28">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="ui:Browser" Name="databank" />
                       <Variable x:TypeArguments="x:Int32" Default="0" Name="totalErrors" />
@@ -1587,6 +1662,9 @@
                       </ui:SendOutlookMail.Files>
                     </ui:SendOutlookMail>
                   </Sequence>
+                  <FlowStep.Next>
+                    <x:Reference>__ReferenceID2</x:Reference>
+                  </FlowStep.Next>
                 </FlowStep>
               </FlowStep.Next>
             </FlowStep>
@@ -1595,11 +1673,12 @@
       </FlowStep.Next>
     </FlowStep>
     <x:Reference>__ReferenceID0</x:Reference>
-    <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
     <x:Reference>__ReferenceID7</x:Reference>
+    <x:Reference>__ReferenceID8</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
   </Flowchart>
 </Activity>

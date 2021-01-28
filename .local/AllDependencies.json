@@ -810,37 +810,6 @@
           "build/_._": {}
         }
       },
-      "UiPath.Cryptography.Activities/1.0.7495.12930": {
-        "type": "package",
-        "compile": {
-          "lib/net452/_._": {}
-        },
-        "runtime": {
-          "lib/net452/UiPath.Cryptography.Activities.Design.dll": {},
-          "lib/net452/UiPath.Cryptography.Activities.dll": {},
-          "lib/net452/UiPath.Cryptography.dll": {}
-        },
-        "resource": {
-          "lib/net452/fr/UiPath.Cryptography.Activities.Design.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net452/fr/UiPath.Cryptography.Activities.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net452/ja/UiPath.Cryptography.Activities.Design.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net452/ja/UiPath.Cryptography.Activities.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net452/ru/UiPath.Cryptography.Activities.Design.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net452/ru/UiPath.Cryptography.Activities.resources.dll": {
-            "locale": "ru"
-          }
-        }
-      },
       "UiPath.Excel.Activities/2.9.3": {
         "type": "package",
         "dependencies": {
@@ -3002,26 +2971,6 @@
         "uipath.nuspec"
       ]
     },
-    "UiPath.Cryptography.Activities/1.0.7495.12930": {
-      "sha512": "1qIHnK5rPogKwhwB2Ud8TxcEb3J7YThpHzknZSjVgUPKBli2Dt2KEMQNrI4+AWomEU1Id+zYje5v7Mwr9KdZcQ==",
-      "type": "package",
-      "path": "uipath.cryptography.activities/1.0.7495.12930",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net452/UiPath.Cryptography.Activities.Design.dll",
-        "lib/net452/UiPath.Cryptography.Activities.dll",
-        "lib/net452/UiPath.Cryptography.dll",
-        "lib/net452/fr/UiPath.Cryptography.Activities.Design.resources.dll",
-        "lib/net452/fr/UiPath.Cryptography.Activities.resources.dll",
-        "lib/net452/ja/UiPath.Cryptography.Activities.Design.resources.dll",
-        "lib/net452/ja/UiPath.Cryptography.Activities.resources.dll",
-        "lib/net452/ru/UiPath.Cryptography.Activities.Design.resources.dll",
-        "lib/net452/ru/UiPath.Cryptography.Activities.resources.dll",
-        "uipath.cryptography.activities.1.0.7495.12930.nupkg.sha512",
-        "uipath.cryptography.activities.nuspec"
-      ]
-    },
     "UiPath.Excel.Activities/2.9.3": {
       "sha512": "rYWg1JGpheTGtJpNVMOhzIeEcdlejTKRduaBKRKu51VWUcEEdAGtTFRa+/tCT4/bsxQ1d/Iad068sd0NJxOhGQ==",
       "type": "package",
@@ -3530,7 +3479,6 @@
   "projectFileDependencyGroups": {
     "": [],
     ".NETFramework,Version=v4.6.1": [
-      "UiPath.Cryptography.Activities >= 1.0.7495.12930 <= 1.0.7495.12930",
       "UiPath.Excel.Activities >= 2.9.3 <= 2.9.3",
       "UiPath.Mail.Activities >= 1.9.3 <= 1.9.3",
       "UiPath.System.Activities >= 20.10.1 <= 20.10.1",
@@ -3551,11 +3499,6 @@
     "frameworks": {
       "net461": {
         "dependencies": {
-          "UiPath.Cryptography.Activities": {
-            "include": "Runtime",
-            "target": "Package",
-            "version": "[1.0.7495.12930, 1.0.7495.12930]"
-          },
           "UiPath.Excel.Activities": {
             "include": "Runtime",
             "target": "Package",

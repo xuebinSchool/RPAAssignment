@@ -2,18 +2,6 @@
   "Packages": [
     {
       "Package": {
-        "Id": "UiPath.Cryptography.Activities",
-        "Version": "1.0.7495.12930"
-      },
-      "Assemblies": [
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities/1.0.7495.12930\\lib/net452/UiPath.Cryptography.Activities.Design.dll",
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities/1.0.7495.12930\\lib/net452/UiPath.Cryptography.Activities.dll",
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities/1.0.7495.12930\\lib/net452/UiPath.Cryptography.dll"
-      ],
-      "Path": "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities\\1.0.7495.12930"
-    },
-    {
-      "Package": {
         "Id": "UiPath.Excel.Activities",
         "Version": "2.9.3"
       },
@@ -797,11 +785,6 @@
     "UiPath": {
       "Id": "UiPath",
       "Version": "20.10.7585.27318",
-      "Dependencies": []
-    },
-    "UiPath.Cryptography.Activities": {
-      "Id": "UiPath.Cryptography.Activities",
-      "Version": "1.0.7495.12930",
       "Dependencies": []
     },
     "UiPath.Excel.Activities": {
@@ -1670,18 +1653,6 @@
         "C:\\Users\\Potato\\.nuget\\packages\\uipath\\20.10.7585.27318\\lib\\UiPath.Interop.dll"
       ],
       "Path": "C:\\Users\\Potato\\.nuget\\packages\\uipath\\20.10.7585.27318"
-    },
-    {
-      "Package": {
-        "Id": "UiPath.Cryptography.Activities",
-        "Version": "1.0.7495.12930"
-      },
-      "Assemblies": [
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities\\1.0.7495.12930\\lib\\net452\\UiPath.Cryptography.Activities.Design.dll",
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities\\1.0.7495.12930\\lib\\net452\\UiPath.Cryptography.Activities.dll",
-        "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities\\1.0.7495.12930\\lib\\net452\\UiPath.Cryptography.dll"
-      ],
-      "Path": "C:\\Users\\Potato\\.nuget\\packages\\uipath.cryptography.activities\\1.0.7495.12930"
     },
     {
       "Package": {
