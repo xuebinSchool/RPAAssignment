@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1006,830" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1357,830" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="38">
+    <scg:List x:TypeArguments="x:String" Capacity="76">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -39,6 +39,7 @@
       <x:String>System.Text.RegularExpressions</x:String>
       <x:String>UiPath.Platform.Triggers</x:String>
       <x:String>UiPath.Platform.Triggers.Scope</x:String>
+      <x:String>System.Net.NetworkInformation</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -146,7 +147,7 @@
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,264" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,370" sap2010:WorkflowViewState.IdRef="Sequence_14">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -199,6 +200,50 @@
                       </If.Else>
                     </If>
                   </Sequence>
+                  <Sequence DisplayName="Check if Internet is connected" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_52">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:Boolean" Name="InternetCheck" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="522,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[InternetCheck]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="522,435" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+                      <TryCatch.Try>
+                        <If Condition="[InternetCheck=False]" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_25">
+                          <If.Then>
+                            <Throw Exception="[new SystemException(&quot;No internet Connection available&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                          </If.Then>
+                        </If>
+                      </TryCatch.Try>
+                      <TryCatch.Catches>
+                        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="488,21" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ActivityAction x:TypeArguments="s:Exception">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                            </ActivityAction.Argument>
+                            <TerminateWorkflow DisplayName="Terminate Workflow" Exception="[exception]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_8" Reason="Internet connection does not exist" />
+                          </ActivityAction>
+                        </Catch>
+                      </TryCatch.Catches>
+                    </TryCatch>
+                  </Sequence>
                   <Sequence DisplayName="Login to Medicial records" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_13">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Int32" Default="1" Name="loginErrorExist" />
@@ -209,98 +254,122 @@
                         <x:Boolean x:Key="IsPinned">False</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <If Condition="[browserExist=True]" sap:VirtualizedContainerService.HintSize="790,1457" sap2010:WorkflowViewState.IdRef="If_4">
+                    <If Condition="[browserExist=True]" sap:VirtualizedContainerService.HintSize="790,1776" sap2010:WorkflowViewState.IdRef="If_4">
                       <If.Then>
-                        <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'chrome.exe Home'" sap:VirtualizedContainerService.HintSize="645,1309" sap2010:WorkflowViewState.IdRef="BrowserScope_2" InformativeScreenshot="65d0a50d164ff894a28bf4308aec1a99" Selector="&lt;html app='chrome.exe' title='Home | Global Health' /&gt;" UiBrowser="[globalHealthBrowser]">
+                        <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'chrome.exe Home'" sap:VirtualizedContainerService.HintSize="645,1628" sap2010:WorkflowViewState.IdRef="BrowserScope_2" InformativeScreenshot="65d0a50d164ff894a28bf4308aec1a99" Selector="&lt;html app='chrome.exe' title='Home | Global Health' /&gt;" UiBrowser="[globalHealthBrowser]">
                           <ui:BrowserScope.Body>
                             <ActivityAction x:TypeArguments="x:Object">
                               <ActivityAction.Argument>
                                 <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                               </ActivityAction.Argument>
-                              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="611,1163" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="611,1482" sap2010:WorkflowViewState.IdRef="Sequence_12">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
                                 <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="569,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_1" />
-                                <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="569,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                  <ui:Click.CursorPosition>
-                                    <ui:CursorPosition Position="Center">
-                                      <ui:CursorPosition.OffsetX>
-                                        <InArgument x:TypeArguments="x:Int32" />
-                                      </ui:CursorPosition.OffsetX>
-                                      <ui:CursorPosition.OffsetY>
-                                        <InArgument x:TypeArguments="x:Int32" />
-                                      </ui:CursorPosition.OffsetY>
-                                    </ui:CursorPosition>
-                                  </ui:Click.CursorPosition>
-                                  <ui:Click.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="47aaf83d-620b-4434-a3e9-a8c4d56d43b8" InformativeScreenshot="5bb4abc32a5304fcbb908c5a75ad919a" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Home | Global Health - Google Chrome' /&gt;&lt;ctrl name='Home | Global Health' role='document' /&gt;&lt;ctrl name='Site' role='grouping' /&gt;&lt;ctrl name='Medical Records' role='link' /&gt;&lt;ctrl idx='2' role='grouping' /&gt;">
-                                      <ui:Target.TimeoutMS>
-                                        <InArgument x:TypeArguments="x:Int32" />
-                                      </ui:Target.TimeoutMS>
-                                      <ui:Target.WaitForReady>
-                                        <InArgument x:TypeArguments="ui:WaitForReady" />
-                                      </ui:Target.WaitForReady>
-                                    </ui:Target>
-                                  </ui:Click.Target>
-                                </ui:Click>
-                                <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text  Password'" EmptyField="True" sap:VirtualizedContainerService.HintSize="569,134" sap2010:WorkflowViewState.IdRef="TypeInto_2" Text="[loginPassword]">
-                                  <ui:TypeInto.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="913d3512-49b2-4278-a414-ac2e2014919f" InformativeScreenshot="3401d13201cafa8936f651b4ae9f538b" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='*e | Global Health - Google Chrome' /&gt;&lt;ctrl name='*e | Global Health' role='document' /&gt;&lt;ctrl name='Password' role='editable text' /&gt;" TimeoutMS="2000">
-                                      <ui:Target.WaitForReady>
-                                        <InArgument x:TypeArguments="ui:WaitForReady" />
-                                      </ui:Target.WaitForReady>
-                                    </ui:Target>
-                                  </ui:TypeInto.Target>
-                                  <sap:WorkflowViewStateService.ViewState>
-                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                    </scg:Dictionary>
-                                  </sap:WorkflowViewStateService.ViewState>
-                                </ui:TypeInto>
-                                <Assign sap:VirtualizedContainerService.HintSize="569,60" sap2010:WorkflowViewState.IdRef="Assign_6">
-                                  <Assign.To>
-                                    <OutArgument x:TypeArguments="x:String">[loginPassword]</OutArgument>
-                                  </Assign.To>
-                                  <Assign.Value>
-                                    <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
-                                  </Assign.Value>
-                                </Assign>
-                                <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'BUTTON'" sap:VirtualizedContainerService.HintSize="569,106" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                  <ui:Click.CursorPosition>
-                                    <ui:CursorPosition Position="Center">
-                                      <ui:CursorPosition.OffsetX>
-                                        <InArgument x:TypeArguments="x:Int32" />
-                                      </ui:CursorPosition.OffsetX>
-                                      <ui:CursorPosition.OffsetY>
-                                        <InArgument x:TypeArguments="x:Int32" />
-                                      </ui:CursorPosition.OffsetY>
-                                    </ui:CursorPosition>
-                                  </ui:Click.CursorPosition>
-                                  <ui:Click.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="1f287c62-8cfb-4b33-bf2d-b322ebbc3283" InformativeScreenshot="a6b26434524015520079ffe1ec401349" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='*e | Global Health - Google Chrome' /&gt;&lt;ctrl name='*e | Global Health' role='document' /&gt;&lt;ctrl name='Go' role='push button' /&gt;" TimeoutMS="2000">
-                                      <ui:Target.WaitForReady>
-                                        <InArgument x:TypeArguments="ui:WaitForReady" />
-                                      </ui:Target.WaitForReady>
-                                    </ui:Target>
-                                  </ui:Click.Target>
-                                </ui:Click>
-                                <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="569,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
-                                <ui:GetAttribute Attribute="Visibility" ContinueOnError="True" DisplayName="Get Attribute 'grouping'" sap:VirtualizedContainerService.HintSize="569,134" sap2010:WorkflowViewState.IdRef="GetAttribute_1">
-                                  <ui:GetAttribute.Result>
-                                    <OutArgument x:TypeArguments="x:Int32">[loginErrorExist]</OutArgument>
-                                  </ui:GetAttribute.Result>
-                                  <ui:GetAttribute.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0c21cae8-527a-4871-89c7-589cf515aff4" InformativeScreenshot="bf50d99ad9170e66a6986ad2775ec8d8" Selector="&lt;html app='chrome.exe' title='Blank Page | Global Health' /&gt;&lt;webctrl tag='P' innertext='Please enter the correct password.' class='_1knzk' /&gt;" TimeoutMS="1000">
-                                      <ui:Target.WaitForReady>
-                                        <InArgument x:TypeArguments="ui:WaitForReady" />
-                                      </ui:Target.WaitForReady>
-                                    </ui:Target>
-                                  </ui:GetAttribute.Target>
-                                </ui:GetAttribute>
+                                <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="569,1081" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                                  <TryCatch.Try>
+                                    <Sequence sap:VirtualizedContainerService.HintSize="376,854" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                        <ui:Click.CursorPosition>
+                                          <ui:CursorPosition Position="Center">
+                                            <ui:CursorPosition.OffsetX>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetX>
+                                            <ui:CursorPosition.OffsetY>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetY>
+                                          </ui:CursorPosition>
+                                        </ui:Click.CursorPosition>
+                                        <ui:Click.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="47aaf83d-620b-4434-a3e9-a8c4d56d43b8" InformativeScreenshot="5bb4abc32a5304fcbb908c5a75ad919a" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Home | Global Health - Google Chrome' /&gt;&lt;ctrl name='Home | Global Health' role='document' /&gt;&lt;ctrl name='Site' role='grouping' /&gt;&lt;ctrl name='Medical Records' role='link' /&gt;&lt;ctrl idx='2' role='grouping' /&gt;" TimeoutMS="2000">
+                                            <ui:Target.WaitForReady>
+                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                            </ui:Target.WaitForReady>
+                                          </ui:Target>
+                                        </ui:Click.Target>
+                                      </ui:Click>
+                                      <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text  Password'" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_2" Text="[loginPassword]">
+                                        <ui:TypeInto.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="913d3512-49b2-4278-a414-ac2e2014919f" InformativeScreenshot="3401d13201cafa8936f651b4ae9f538b" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='*e | Global Health - Google Chrome' /&gt;&lt;ctrl name='*e | Global Health' role='document' /&gt;&lt;ctrl name='Password' role='editable text' /&gt;" TimeoutMS="2000">
+                                            <ui:Target.WaitForReady>
+                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                            </ui:Target.WaitForReady>
+                                          </ui:Target>
+                                        </ui:TypeInto.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:TypeInto>
+                                      <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:String">[loginPassword]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                      <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'BUTTON'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                        <ui:Click.CursorPosition>
+                                          <ui:CursorPosition Position="Center">
+                                            <ui:CursorPosition.OffsetX>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetX>
+                                            <ui:CursorPosition.OffsetY>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetY>
+                                          </ui:CursorPosition>
+                                        </ui:Click.CursorPosition>
+                                        <ui:Click.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="1f287c62-8cfb-4b33-bf2d-b322ebbc3283" InformativeScreenshot="a6b26434524015520079ffe1ec401349" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='*e | Global Health - Google Chrome' /&gt;&lt;ctrl name='*e | Global Health' role='document' /&gt;&lt;ctrl name='Go' role='push button' /&gt;" TimeoutMS="2000">
+                                            <ui:Target.WaitForReady>
+                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                            </ui:Target.WaitForReady>
+                                          </ui:Target>
+                                        </ui:Click.Target>
+                                      </ui:Click>
+                                      <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                                      <ui:GetAttribute Attribute="Visibility" ContinueOnError="True" DisplayName="Get Attribute 'grouping'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="GetAttribute_1">
+                                        <ui:GetAttribute.Result>
+                                          <OutArgument x:TypeArguments="x:Int32">[loginErrorExist]</OutArgument>
+                                        </ui:GetAttribute.Result>
+                                        <ui:GetAttribute.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0c21cae8-527a-4871-89c7-589cf515aff4" InformativeScreenshot="bf50d99ad9170e66a6986ad2775ec8d8" Selector="&lt;html app='chrome.exe' title='Blank Page | Global Health' /&gt;&lt;webctrl tag='P' innertext='Please enter the correct password.' class='_1knzk' /&gt;" TimeoutMS="1000">
+                                            <ui:Target.WaitForReady>
+                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                            </ui:Target.WaitForReady>
+                                          </ui:Target>
+                                        </ui:GetAttribute.Target>
+                                      </ui:GetAttribute>
+                                    </Sequence>
+                                  </TryCatch.Try>
+                                  <TryCatch.Catches>
+                                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ActivityAction x:TypeArguments="s:Exception">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                        </ActivityAction.Argument>
+                                        <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_6" Reason="Element cannot be found, Please try again" />
+                                      </ActivityAction>
+                                    </Catch>
+                                  </TryCatch.Catches>
+                                </TryCatch>
                                 <If Condition="[loginErrorExist=1]" sap:VirtualizedContainerService.HintSize="569,207" sap2010:WorkflowViewState.IdRef="If_8">
                                   <If.Then>
                                     <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_9">
@@ -575,112 +644,130 @@
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="484,291" sap2010:WorkflowViewState.IdRef="InputDialog_3" IsPassword="False" Label="Please Select An Option" Options="[{&quot;Start the RPA&quot;, &quot;Options&quot;, &quot;Exit&quot;}]" Title="Global Health RPA">
+                      <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="564,291" sap2010:WorkflowViewState.IdRef="InputDialog_3" IsPassword="False" Label="Please Select An Option" Options="[{&quot;Start the RPA&quot;, &quot;Options&quot;, &quot;Exit&quot;}]" Title="Global Health RPA">
                         <ui:InputDialog.Result>
                           <OutArgument x:TypeArguments="x:String">[selectedOptions]</OutArgument>
                         </ui:InputDialog.Result>
                       </ui:InputDialog>
-                      <ui:ReadRange AddHeaders="True" DataTable="[configDt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="484,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Settings" WorkbookPath="config.xlsx">
-                        <ui:ReadRange.Range>
-                          <InArgument x:TypeArguments="x:String">
-                            <Literal x:TypeArguments="x:String" Value="" />
-                          </InArgument>
-                        </ui:ReadRange.Range>
-                      </ui:ReadRange>
-                      <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="484,664" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                      <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="564,1097" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                         <TryCatch.Try>
-                          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="334,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
-                            <ui:MultipleAssign.AssignOperations>
-                              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_23">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_30">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_31">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_32">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_33">
-                                  <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
-                                  </ui:AssignOperation.To>
-                                  <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
-                                  </ui:AssignOperation.Value>
-                                </ui:AssignOperation>
-                              </scg:List>
-                            </ui:MultipleAssign.AssignOperations>
-                          </ui:MultipleAssign>
-                        </TryCatch.Try>
-                        <TryCatch.Catches>
-                          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,502" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                          <Sequence sap:VirtualizedContainerService.HintSize="526,848" sap2010:WorkflowViewState.IdRef="Sequence_48">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:ReadRange AddHeaders="True" DataTable="[configDt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="484,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Settings" WorkbookPath="config.xlsx">
+                              <ui:ReadRange.Range>
+                                <InArgument x:TypeArguments="x:String">
+                                  <Literal x:TypeArguments="x:String" Value="" />
+                                </InArgument>
+                              </ui:ReadRange.Range>
+                            </ui:ReadRange>
+                            <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="484,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                              <ui:MultipleAssign.AssignOperations>
+                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_23">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_30">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_31">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_32">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_33">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[configDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                </scg:List>
+                              </ui:MultipleAssign.AssignOperations>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:MultipleAssign>
+                            <If Condition="[SmokeAndAlcoholBody Is Nothing Or SmokeAndAlcoholSubject Is Nothing Or&#xA;OverweightBody Is Nothing Or OverweightSubject Is Nothing Or healthPortalWebsite Is Nothing Or&#xA;dataBankWebsite Is Nothing Or adminEmail Is Nothing Or accountEmail Is Nothing Or adminBody Is Nothing Or&#xA;adminSubject Is Nothing]" sap:VirtualizedContainerService.HintSize="484,212" sap2010:WorkflowViewState.IdRef="If_24">
+                              <If.Then>
+                                <Throw Exception="[new NotSupportedException(&quot;Missing Data in the Config file&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                              </If.Then>
+                            </If>
+                          </Sequence>
+                        </TryCatch.Try>
+                        <TryCatch.Catches>
+                          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="530,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
@@ -688,7 +775,7 @@
                               <ActivityAction.Argument>
                                 <DelegateInArgument x:TypeArguments="s:Exception" Name="missingConfigData" />
                               </ActivityAction.Argument>
-                              <Sequence sap:VirtualizedContainerService.HintSize="376,433" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                              <Sequence sap:VirtualizedContainerService.HintSize="376,850" sap2010:WorkflowViewState.IdRef="Sequence_45">
                                 <Sequence.Variables>
                                   <Variable x:TypeArguments="sd:DataTable" Name="recoveryDt" />
                                 </Sequence.Variables>
@@ -706,12 +793,228 @@
                                   </ui:ReadRange.Range>
                                 </ui:ReadRange>
                                 <ui:WriteRange AddHeaders="False" DataTable="[recoveryDt]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Settings" StartingCell="A1" WorkbookPath="config.xlsx" />
+                                <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="334,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_10">
+                                  <ui:MultipleAssign.AssignOperations>
+                                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_44">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_45">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_46">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_47">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_48">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_49">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_50">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_51">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_52">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_53">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                    </scg:List>
+                                  </ui:MultipleAssign.AssignOperations>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:MultipleAssign>
+                              </Sequence>
+                            </ActivityAction>
+                          </Catch>
+                          <Catch x:TypeArguments="s:NotSupportedException" sap:VirtualizedContainerService.HintSize="530,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ActivityAction x:TypeArguments="s:NotSupportedException">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="s:NotSupportedException" Name="exception" />
+                              </ActivityAction.Argument>
+                              <Sequence sap:VirtualizedContainerService.HintSize="376,850" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                                <Sequence.Variables>
+                                  <Variable x:TypeArguments="sd:DataTable" Name="recoveryDt" />
+                                </Sequence.Variables>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_8" Text="[&quot;Empty values found in config file, resetting the config file now&quot;]" />
+                                <ui:ReadRange AddHeaders="False" DataTable="[recoveryDt]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ReadRange_4" SheetName="Default" WorkbookPath="config.xlsx">
+                                  <ui:ReadRange.Range>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </ui:ReadRange.Range>
+                                </ui:ReadRange>
+                                <ui:WriteRange AddHeaders="False" DataTable="[recoveryDt]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,115" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="Settings" StartingCell="A1" WorkbookPath="config.xlsx" />
+                                <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="334,377" sap2010:WorkflowViewState.IdRef="MultipleAssign_11">
+                                  <ui:MultipleAssign.AssignOperations>
+                                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_54">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='smokeAlcoholBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_55">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[SmokeAndAlcoholSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='smokeAlcoholSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_56">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[OverweightBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='overweightBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_57">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[OverweightSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='overweightSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_58">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[healthPortalWebsite]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='healthPortalWebsite'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_59">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[dataBankWebsite]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='dataBankWebsite'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_60">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminEmail]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminEmail'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_61">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[accountEmail]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='accountEmail'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_62">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminBody]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminBody'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_63">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="x:String">[adminSubject]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="x:String">[recoveryDt.Select("Name='adminSubject'")(0)(1).ToString]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                    </scg:List>
+                                  </ui:MultipleAssign.AssignOperations>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:MultipleAssign>
                               </Sequence>
                             </ActivityAction>
                           </Catch>
                         </TryCatch.Catches>
                       </TryCatch>
-                      <If Condition="[selectedOptions=&quot;Start the RPA&quot;]" sap:VirtualizedContainerService.HintSize="484,386" sap2010:WorkflowViewState.IdRef="If_5">
+                      <If Condition="[selectedOptions=&quot;Start the RPA&quot;]" sap:VirtualizedContainerService.HintSize="564,386" sap2010:WorkflowViewState.IdRef="If_5">
                         <If.Then>
                           <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="334,238" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="True" Label="Please enter the password required for authenication" Title="Login">
                             <ui:InputDialog.Result>
@@ -870,27 +1173,27 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:OpenBrowser CommunicationMethod="{x:Null}" Hidden="{x:Null}" NewSession="{x:Null}" Private="{x:Null}" BrowserType="Chrome" DisplayName="Open Browser" sap:VirtualizedContainerService.HintSize="923,7075" sap2010:WorkflowViewState.IdRef="OpenBrowser_3" UiBrowser="[databank]" Url="[dataBankWebsite]">
+                    <ui:OpenBrowser CommunicationMethod="{x:Null}" Hidden="{x:Null}" NewSession="{x:Null}" Private="{x:Null}" BrowserType="Chrome" DisplayName="Open Browser" sap:VirtualizedContainerService.HintSize="1003,6652" sap2010:WorkflowViewState.IdRef="OpenBrowser_3" UiBrowser="[databank]" Url="[dataBankWebsite]">
                       <ui:OpenBrowser.Body>
                         <ActivityAction x:TypeArguments="x:Object">
                           <ActivityAction.Argument>
                             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                           </ActivityAction.Argument>
-                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="889,6974" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="969,6551" sap2010:WorkflowViewState.IdRef="Sequence_29">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="847,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_2" />
-                            <ui:RemoveDataRow Row="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="Remove Data Row" sap:VirtualizedContainerService.HintSize="847,22" sap2010:WorkflowViewState.IdRef="RemoveDataRow_1" RowIndex="0" />
-                            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="847,6696" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                            <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="927,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_2" />
+                            <ui:RemoveDataRow Row="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="Remove Data Row" sap:VirtualizedContainerService.HintSize="927,22" sap2010:WorkflowViewState.IdRef="RemoveDataRow_1" RowIndex="0" />
+                            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="927,6273" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
                               <ui:ForEachRow.Body>
                                 <ActivityAction x:TypeArguments="sd:DataRow">
                                   <ActivityAction.Argument>
                                     <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
                                   </ActivityAction.Argument>
-                                  <Sequence DisplayName="For loop" sap:VirtualizedContainerService.HintSize="797,6549" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                                  <Sequence DisplayName="For loop" sap:VirtualizedContainerService.HintSize="877,6126" sap2010:WorkflowViewState.IdRef="Sequence_31">
                                     <Sequence.Variables>
                                       <Variable x:TypeArguments="x:String" Name="Smoke" />
                                       <Variable x:TypeArguments="x:String" Name="Alcohol" />
@@ -912,7 +1215,7 @@
                                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="755,408" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="835,408" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
                                       <ui:MultipleAssign.AssignOperations>
                                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
                                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -1006,7 +1309,7 @@
                                         </scg:List>
                                       </ui:MultipleAssign.AssignOperations>
                                     </ui:MultipleAssign>
-                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="755,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
+                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="835,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
                                       <ui:MultipleAssign.AssignOperations>
                                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_26">
@@ -1028,105 +1331,39 @@
                                         </scg:List>
                                       </ui:MultipleAssign.AssignOperations>
                                     </ui:MultipleAssign>
-                                    <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_3" Text="[Name]">
-                                      <ui:TypeInto.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="97448744-83a7-4635-9467-bc65f419805c" InformativeScreenshot="bda18c9c90a996030c0f5222dc7515e5" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Name Required question' role='editable text' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:TypeInto.Target>
-                                    </ui:TypeInto>
-                                    <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_4" Text="[Age]">
-                                      <ui:TypeInto.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ad63616f-ef2e-464b-a6c0-c441e9fbe638" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Age Required question' role='editable text' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:TypeInto.Target>
-                                    </ui:TypeInto>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="820095a5-796e-4d0e-b633-980bf6f20cbd" InformativeScreenshot="856ff6266fb254b147364a0fc260180d" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Gender Required question' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Female'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_16" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eec5c98f-6f75-4ec7-896a-e73776d6b962" InformativeScreenshot="2cf564673f8ebc4640cdd2d23da36b0a" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Gender Required question' role='list' /&gt;&lt;ctrl name='{{Gender}}' role='list item' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0e80558f-1b40-4407-8065-41ab8e61845a" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <If Condition="[Medication=&quot;Yes&quot;]" sap:VirtualizedContainerService.HintSize="755,519" sap2010:WorkflowViewState.IdRef="If_12">
-                                      <If.Then>
-                                        <Sequence sap:VirtualizedContainerService.HintSize="376,372" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                                    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="835,2848" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                                      <TryCatch.Try>
+                                        <Sequence sap:VirtualizedContainerService.HintSize="797,2621" sap2010:WorkflowViewState.IdRef="Sequence_51">
                                           <sap:WorkflowViewStateService.ViewState>
                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                             </scg:Dictionary>
                                           </sap:WorkflowViewStateService.ViewState>
-                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Yes'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_8" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                          <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_3" Text="[Name]">
+                                            <ui:TypeInto.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="97448744-83a7-4635-9467-bc65f419805c" InformativeScreenshot="bda18c9c90a996030c0f5222dc7515e5" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Name Required question' role='editable text' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:TypeInto.Target>
+                                          </ui:TypeInto>
+                                          <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_4" Text="[Age]">
+                                            <ui:TypeInto.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ad63616f-ef2e-464b-a6c0-c441e9fbe638" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Age Required question' role='editable text' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:TypeInto.Target>
+                                          </ui:TypeInto>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
                                             <ui:Click.CursorPosition>
                                               <ui:CursorPosition Position="Center">
                                                 <ui:CursorPosition.OffsetX>
@@ -1138,7 +1375,7 @@
                                               </ui:CursorPosition>
                                             </ui:Click.CursorPosition>
                                             <ui:Click.Target>
-                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d3b39bde-ca64-423e-b6c9-9123db0c5f39" InformativeScreenshot="a08c9c1204fbca3316276c2176794743" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='Yes' role='list item' /&gt;">
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="820095a5-796e-4d0e-b633-980bf6f20cbd" InformativeScreenshot="856ff6266fb254b147364a0fc260180d" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Gender Required question' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
                                                 <ui:Target.TimeoutMS>
                                                   <InArgument x:TypeArguments="x:Int32" />
                                                 </ui:Target.TimeoutMS>
@@ -1148,9 +1385,210 @@
                                               </ui:Target>
                                             </ui:Click.Target>
                                           </ui:Click>
-                                          <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_5" Text="[row.Item(4).ToString]">
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Female'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_16" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eec5c98f-6f75-4ec7-896a-e73776d6b962" InformativeScreenshot="2cf564673f8ebc4640cdd2d23da36b0a" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Gender Required question' role='list' /&gt;&lt;ctrl name='{{Gender}}' role='list item' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0e80558f-1b40-4407-8065-41ab8e61845a" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <If Condition="[Medication=&quot;Yes&quot;]" sap:VirtualizedContainerService.HintSize="755,519" sap2010:WorkflowViewState.IdRef="If_12">
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="376,372" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Yes'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_8" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                                  <ui:Click.CursorPosition>
+                                                    <ui:CursorPosition Position="Center">
+                                                      <ui:CursorPosition.OffsetX>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:CursorPosition.OffsetX>
+                                                      <ui:CursorPosition.OffsetY>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:CursorPosition.OffsetY>
+                                                    </ui:CursorPosition>
+                                                  </ui:Click.CursorPosition>
+                                                  <ui:Click.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d3b39bde-ca64-423e-b6c9-9123db0c5f39" InformativeScreenshot="a08c9c1204fbca3316276c2176794743" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='Yes' role='list item' /&gt;">
+                                                      <ui:Target.TimeoutMS>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:Target.TimeoutMS>
+                                                      <ui:Target.WaitForReady>
+                                                        <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                      </ui:Target.WaitForReady>
+                                                    </ui:Target>
+                                                  </ui:Click.Target>
+                                                </ui:Click>
+                                                <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_5" Text="[row.Item(4).ToString]">
+                                                  <ui:TypeInto.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="1ed56f6c-0702-44ac-be0a-83a6a773b612" InformativeScreenshot="2e9c2800887b2c28386f2b688039a1b0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='If Yes, please key in your medication:' role='editable text' /&gt;">
+                                                      <ui:Target.TimeoutMS>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:Target.TimeoutMS>
+                                                      <ui:Target.WaitForReady>
+                                                        <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                      </ui:Target.WaitForReady>
+                                                    </ui:Target>
+                                                  </ui:TypeInto.Target>
+                                                </ui:TypeInto>
+                                              </Sequence>
+                                            </If.Then>
+                                            <If.Else>
+                                              <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  No'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_9" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                                <ui:Click.CursorPosition>
+                                                  <ui:CursorPosition Position="Center">
+                                                    <ui:CursorPosition.OffsetX>
+                                                      <InArgument x:TypeArguments="x:Int32" />
+                                                    </ui:CursorPosition.OffsetX>
+                                                    <ui:CursorPosition.OffsetY>
+                                                      <InArgument x:TypeArguments="x:Int32" />
+                                                    </ui:CursorPosition.OffsetY>
+                                                  </ui:CursorPosition>
+                                                </ui:Click.CursorPosition>
+                                                <ui:Click.Target>
+                                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d6d8fc47-09b1-4da8-828d-953ee823e84b" InformativeScreenshot="6cdc816c4d43f0705a433004a561848f" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='No' role='list item' /&gt;">
+                                                    <ui:Target.TimeoutMS>
+                                                      <InArgument x:TypeArguments="x:Int32" />
+                                                    </ui:Target.TimeoutMS>
+                                                    <ui:Target.WaitForReady>
+                                                      <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                    </ui:Target.WaitForReady>
+                                                  </ui:Target>
+                                                </ui:Click.Target>
+                                              </ui:Click>
+                                            </If.Else>
+                                          </If>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_10" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="146848a6-1d1b-456d-a7f4-757e3ddb7542" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Does you have any family history of heart diseases/ high blood p*' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_17" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="7b5a45d3-b57d-4b9c-9b7c-3d8e30e8a156" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Does you have any family history of heart diseases/ high blood p*' role='list' /&gt;&lt;ctrl name='{{HeartIssue}}' role='list item' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_14" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eb700729-8f06-41e4-b937-07a07296c88b" InformativeScreenshot="67ae84b9cafdcfcbf085d0367360a76e" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl idx='1' name='Do you smoke? Required question' role='grouping' /&gt;&lt;ctrl name='{{Smoke}}' role='radio button' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_15" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9733d993-f4b8-4eec-9955-e39f4630a10b" InformativeScreenshot="67ae84b9cafdcfcbf085d0367360a76e" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl idx='1' name='Do you drink alcohol regularly? Required question' role='grouping' /&gt;&lt;ctrl name='{{Alcohol}}' role='radio button' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_6" Text="[Height]">
                                             <ui:TypeInto.Target>
-                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="1ed56f6c-0702-44ac-be0a-83a6a773b612" InformativeScreenshot="2e9c2800887b2c28386f2b688039a1b0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='If Yes, please key in your medication:' role='editable text' /&gt;">
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="62de57a5-038c-4797-b611-f114e6542e29" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Height (m) Required question' role='editable text' /&gt;">
                                                 <ui:Target.TimeoutMS>
                                                   <InArgument x:TypeArguments="x:Int32" />
                                                 </ui:Target.TimeoutMS>
@@ -1160,190 +1598,82 @@
                                               </ui:Target>
                                             </ui:TypeInto.Target>
                                           </ui:TypeInto>
+                                          <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_7" Text="[Weight]">
+                                            <ui:TypeInto.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ee451df5-19ca-4c47-b0da-4c51ef92c298" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Weight (kg) Required question' role='editable text' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:TypeInto.Target>
+                                          </ui:TypeInto>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button  Submit'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_18" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="cb77bbb0-928b-45f4-8e0b-489a4adfdf7c" InformativeScreenshot="b2535076446c8add585e0f06acc2ee99" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Submit' role='push button' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
+                                          <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'link Submit'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_19" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a0e50058-811d-4613-8a57-b51a80acb8be" InformativeScreenshot="acee65d17add6ebe8d328c7490cc8c08" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Submit another response' role='link' /&gt;">
+                                                <ui:Target.TimeoutMS>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:Target.TimeoutMS>
+                                                <ui:Target.WaitForReady>
+                                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                </ui:Target.WaitForReady>
+                                              </ui:Target>
+                                            </ui:Click.Target>
+                                          </ui:Click>
                                         </Sequence>
-                                      </If.Then>
-                                      <If.Else>
-                                        <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  No'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_9" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                          <ui:Click.CursorPosition>
-                                            <ui:CursorPosition Position="Center">
-                                              <ui:CursorPosition.OffsetX>
-                                                <InArgument x:TypeArguments="x:Int32" />
-                                              </ui:CursorPosition.OffsetX>
-                                              <ui:CursorPosition.OffsetY>
-                                                <InArgument x:TypeArguments="x:Int32" />
-                                              </ui:CursorPosition.OffsetY>
-                                            </ui:CursorPosition>
-                                          </ui:Click.CursorPosition>
-                                          <ui:Click.Target>
-                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d6d8fc47-09b1-4da8-828d-953ee823e84b" InformativeScreenshot="6cdc816c4d43f0705a433004a561848f" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Are you currently under any long term medication? Required quest*' role='list' /&gt;&lt;ctrl name='No' role='list item' /&gt;">
-                                              <ui:Target.TimeoutMS>
-                                                <InArgument x:TypeArguments="x:Int32" />
-                                              </ui:Target.TimeoutMS>
-                                              <ui:Target.WaitForReady>
-                                                <InArgument x:TypeArguments="ui:WaitForReady" />
-                                              </ui:Target.WaitForReady>
-                                            </ui:Target>
-                                          </ui:Click.Target>
-                                        </ui:Click>
-                                      </If.Else>
-                                    </If>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_10" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="146848a6-1d1b-456d-a7f4-757e3ddb7542" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Does you have any family history of heart diseases/ high blood p*' role='list' /&gt;&lt;ctrl name='Choose' role='list item' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'list item  Choose'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_17" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="7b5a45d3-b57d-4b9c-9b7c-3d8e30e8a156" InformativeScreenshot="9f3f01b7e0ac131e85d5da1f7906f1d0" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Does you have any family history of heart diseases/ high blood p*' role='list' /&gt;&lt;ctrl name='{{HeartIssue}}' role='list item' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_14" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eb700729-8f06-41e4-b937-07a07296c88b" InformativeScreenshot="67ae84b9cafdcfcbf085d0367360a76e" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl idx='1' name='Do you smoke? Required question' role='grouping' /&gt;&lt;ctrl name='{{Smoke}}' role='radio button' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'grouping'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_15" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9733d993-f4b8-4eec-9955-e39f4630a10b" InformativeScreenshot="67ae84b9cafdcfcbf085d0367360a76e" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl idx='1' name='Do you drink alcohol regularly? Required question' role='grouping' /&gt;&lt;ctrl name='{{Alcohol}}' role='radio button' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_6" Text="[Height]">
-                                      <ui:TypeInto.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="62de57a5-038c-4797-b611-f114e6542e29" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Height (m) Required question' role='editable text' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:TypeInto.Target>
-                                    </ui:TypeInto>
-                                    <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'editable text'" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_7" Text="[Weight]">
-                                      <ui:TypeInto.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ee451df5-19ca-4c47-b0da-4c51ef92c298" InformativeScreenshot="bd9c389a594ab037d3b1a6371e21b6bf" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Weight (kg) Required question' role='editable text' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:TypeInto.Target>
-                                    </ui:TypeInto>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button  Submit'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_18" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="cb77bbb0-928b-45f4-8e0b-489a4adfdf7c" InformativeScreenshot="b2535076446c8add585e0f06acc2ee99" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Submit' role='push button' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'link Submit'" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="Click_19" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                      <ui:Click.CursorPosition>
-                                        <ui:CursorPosition Position="Center">
-                                          <ui:CursorPosition.OffsetX>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetX>
-                                          <ui:CursorPosition.OffsetY>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:CursorPosition.OffsetY>
-                                        </ui:CursorPosition>
-                                      </ui:Click.CursorPosition>
-                                      <ui:Click.Target>
-                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a0e50058-811d-4613-8a57-b51a80acb8be" InformativeScreenshot="acee65d17add6ebe8d328c7490cc8c08" Selector="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Basic Medical Screening - Data Bank - Google Chrome' /&gt;&lt;ctrl name='Basic Medical Screening - Data Bank' role='document' /&gt;&lt;ctrl name='Submit another response' role='link' /&gt;">
-                                          <ui:Target.TimeoutMS>
-                                            <InArgument x:TypeArguments="x:Int32" />
-                                          </ui:Target.TimeoutMS>
-                                          <ui:Target.WaitForReady>
-                                            <InArgument x:TypeArguments="ui:WaitForReady" />
-                                          </ui:Target.WaitForReady>
-                                        </ui:Target>
-                                      </ui:Click.Target>
-                                    </ui:Click>
-                                    <If Condition="[Weight.IsNumeric]" sap:VirtualizedContainerService.HintSize="755,399" sap2010:WorkflowViewState.IdRef="If_15">
+                                      </TryCatch.Try>
+                                      <TryCatch.Catches>
+                                        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="801,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ActivityAction x:TypeArguments="s:Exception">
+                                            <ActivityAction.Argument>
+                                              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                            </ActivityAction.Argument>
+                                            <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_7" Reason="Error with finding elements, please try again" />
+                                          </ActivityAction>
+                                        </Catch>
+                                      </TryCatch.Catches>
+                                    </TryCatch>
+                                    <If Condition="[Weight.IsNumeric]" sap:VirtualizedContainerService.HintSize="835,399" sap2010:WorkflowViewState.IdRef="If_15">
                                       <If.Else>
                                         <Sequence sap:VirtualizedContainerService.HintSize="376,252" sap2010:WorkflowViewState.IdRef="Sequence_33">
                                           <sap:WorkflowViewStateService.ViewState>
@@ -1384,7 +1714,7 @@
                                         </Sequence>
                                       </If.Else>
                                     </If>
-                                    <If Condition="[(Convert.ToDouble(Height))&lt;2.5]" sap:VirtualizedContainerService.HintSize="755,399" sap2010:WorkflowViewState.IdRef="If_16">
+                                    <If Condition="[(Convert.ToDouble(Height))&lt;2.5]" sap:VirtualizedContainerService.HintSize="835,399" sap2010:WorkflowViewState.IdRef="If_16">
                                       <If.Else>
                                         <Sequence sap:VirtualizedContainerService.HintSize="376,252" sap2010:WorkflowViewState.IdRef="Sequence_37">
                                           <sap:WorkflowViewStateService.ViewState>
@@ -1425,8 +1755,8 @@
                                         </Sequence>
                                       </If.Else>
                                     </If>
-                                    <ui:IsMatch BuilderPattern="((?&gt;[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+\x20*|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;\x20*)*(?&lt;angle&gt;&lt;))?((?!\.)(?&gt;\.?[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+)+|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;)@(((?!-)[a-zA-Z\d\-]+(?&lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&gt;)" DisplayName="Is Match" sap:VirtualizedContainerService.HintSize="755,59" sap2010:WorkflowViewState.IdRef="IsMatch_1" Input="[Email]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;EMAIL&quot;,&quot;OperationName&quot;:&quot;Email&quot;,&quot;OperationValue&quot;:&quot;((?&gt;[a-zA-Z\\d!#$%&amp;'*+\\-\\\/=?^_`{|}~]+\\x20*|\&quot;((?=[\\x01-\\x7f])[^\&quot;\\\\]|\\\\[\\x01-\\x7f])*\&quot;\\x20*)*(?&lt;angle&gt;&lt;))?((?!\\.)(?&gt;\\.?[a-zA-Z\\d!#$%&amp;'*+\\-\\\/=?^_`{|}~]+)+|\&quot;((?=[\\x01-\\x7f])[^\&quot;\\\\]|\\\\[\\x01-\\x7f])*\&quot;)@(((?!-)[a-zA-Z\\d\\-]+(?&lt;!-)\\.)+[a-zA-Z]{2,}|\\[(((?(?&lt;!\\[)\\.)(25[0-5]|2[0-4]\\d|[01]?\\d?\\d)){4}|[a-zA-Z\\d\\-]*[a-zA-Z\\d]:((?=[\\x01-\\x7f])[^\\\\\\[\\]]|\\\\[\\x01-\\x7f])+)\\])(?(angle)&gt;)&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="((?&gt;[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+\x20*|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;\x20*)*(?&lt;angle&gt;&lt;))?((?!\.)(?&gt;\.?[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+)+|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;)@(((?!-)[a-zA-Z\d\-]+(?&lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&gt;)" RegexOption="IgnoreCase" Result="[emailValidate]" />
-                                    <If Condition="[emailValidate]" sap:VirtualizedContainerService.HintSize="755,399" sap2010:WorkflowViewState.IdRef="If_17">
+                                    <ui:IsMatch BuilderPattern="((?&gt;[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+\x20*|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;\x20*)*(?&lt;angle&gt;&lt;))?((?!\.)(?&gt;\.?[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+)+|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;)@(((?!-)[a-zA-Z\d\-]+(?&lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&gt;)" DisplayName="Is Match" sap:VirtualizedContainerService.HintSize="835,59" sap2010:WorkflowViewState.IdRef="IsMatch_1" Input="[Email]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;EMAIL&quot;,&quot;OperationName&quot;:&quot;Email&quot;,&quot;OperationValue&quot;:&quot;((?&gt;[a-zA-Z\\d!#$%&amp;'*+\\-\\\/=?^_`{|}~]+\\x20*|\&quot;((?=[\\x01-\\x7f])[^\&quot;\\\\]|\\\\[\\x01-\\x7f])*\&quot;\\x20*)*(?&lt;angle&gt;&lt;))?((?!\\.)(?&gt;\\.?[a-zA-Z\\d!#$%&amp;'*+\\-\\\/=?^_`{|}~]+)+|\&quot;((?=[\\x01-\\x7f])[^\&quot;\\\\]|\\\\[\\x01-\\x7f])*\&quot;)@(((?!-)[a-zA-Z\\d\\-]+(?&lt;!-)\\.)+[a-zA-Z]{2,}|\\[(((?(?&lt;!\\[)\\.)(25[0-5]|2[0-4]\\d|[01]?\\d?\\d)){4}|[a-zA-Z\\d\\-]*[a-zA-Z\\d]:((?=[\\x01-\\x7f])[^\\\\\\[\\]]|\\\\[\\x01-\\x7f])+)\\])(?(angle)&gt;)&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="((?&gt;[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+\x20*|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;\x20*)*(?&lt;angle&gt;&lt;))?((?!\.)(?&gt;\.?[a-zA-Z\d!#$%&amp;'*+\-\/=?^_`{|}~]+)+|&quot;((?=[\x01-\x7f])[^&quot;\\]|\\[\x01-\x7f])*&quot;)@(((?!-)[a-zA-Z\d\-]+(?&lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&gt;)" RegexOption="IgnoreCase" Result="[emailValidate]" />
+                                    <If Condition="[emailValidate]" sap:VirtualizedContainerService.HintSize="835,399" sap2010:WorkflowViewState.IdRef="If_17">
                                       <If.Else>
                                         <Sequence sap:VirtualizedContainerService.HintSize="376,252" sap2010:WorkflowViewState.IdRef="Sequence_38">
                                           <sap:WorkflowViewStateService.ViewState>
@@ -1467,7 +1797,7 @@
                                         </Sequence>
                                       </If.Else>
                                     </If>
-                                    <If Condition="[(Convert.ToInt32(Age))&gt;=18]" sap:VirtualizedContainerService.HintSize="755,399" sap2010:WorkflowViewState.IdRef="If_18">
+                                    <If Condition="[(Convert.ToInt32(Age))&gt;=18]" sap:VirtualizedContainerService.HintSize="835,399" sap2010:WorkflowViewState.IdRef="If_18">
                                       <If.Else>
                                         <Sequence sap:VirtualizedContainerService.HintSize="376,252" sap2010:WorkflowViewState.IdRef="Sequence_39">
                                           <sap:WorkflowViewStateService.ViewState>
@@ -1508,70 +1838,110 @@
                                         </Sequence>
                                       </If.Else>
                                     </If>
-                                    <If Condition="[foundErrors = False]" sap:VirtualizedContainerService.HintSize="755,1247" sap2010:WorkflowViewState.IdRef="If_21">
+                                    <If Condition="[foundErrors = False]" sap:VirtualizedContainerService.HintSize="835,505" sap2010:WorkflowViewState.IdRef="If_21">
                                       <If.Then>
-                                        <Sequence sap:VirtualizedContainerService.HintSize="563,1100" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                                        <Sequence sap:VirtualizedContainerService.HintSize="476,358" sap2010:WorkflowViewState.IdRef="Sequence_34">
                                           <sap:WorkflowViewStateService.ViewState>
                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                             </scg:Dictionary>
                                           </sap:WorkflowViewStateService.ViewState>
-                                          <If Condition="[Smoke=&quot;Yes&quot; AND Alcohol=&quot;Yes&quot;]" sap:VirtualizedContainerService.HintSize="521,484" sap2010:WorkflowViewState.IdRef="If_19">
-                                            <If.Then>
-                                              <Sequence sap:VirtualizedContainerService.HintSize="376,337" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                                          <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="434,266" sap2010:WorkflowViewState.IdRef="TryCatch_5">
+                                            <TryCatch.Try>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="563,1100" sap2010:WorkflowViewState.IdRef="Sequence_53">
                                                 <sap:WorkflowViewStateService.ViewState>
                                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                   </scg:Dictionary>
                                                 </sap:WorkflowViewStateService.ViewState>
-                                                <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[SmokeAndAlcoholBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[SmokeAndAlcoholSubject]" To="[Email]">
-                                                  <ui:SendOutlookMail.Files>
-                                                    <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-                                                      <InArgument x:TypeArguments="x:String">smokeDrink.pdf</InArgument>
-                                                    </scg:List>
-                                                  </ui:SendOutlookMail.Files>
-                                                </ui:SendOutlookMail>
-                                                <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_12">
-                                                  <Assign.To>
-                                                    <OutArgument x:TypeArguments="x:Int32">[totalEmailSent]</OutArgument>
-                                                  </Assign.To>
-                                                  <Assign.Value>
-                                                    <InArgument x:TypeArguments="x:Int32">[totalEmailSent+1]</InArgument>
-                                                  </Assign.Value>
-                                                </Assign>
+                                                <If Condition="[Smoke=&quot;Yes&quot; AND Alcohol=&quot;Yes&quot;]" sap:VirtualizedContainerService.HintSize="521,484" sap2010:WorkflowViewState.IdRef="If_19">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <If.Then>
+                                                    <Sequence sap:VirtualizedContainerService.HintSize="376,337" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[SmokeAndAlcoholBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[SmokeAndAlcoholSubject]" To="[Email]">
+                                                        <ui:SendOutlookMail.Files>
+                                                          <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                                                            <InArgument x:TypeArguments="x:String">smokeDrink.pdf</InArgument>
+                                                          </scg:List>
+                                                        </ui:SendOutlookMail.Files>
+                                                      </ui:SendOutlookMail>
+                                                      <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                                                        <Assign.To>
+                                                          <OutArgument x:TypeArguments="x:Int32">[totalEmailSent]</OutArgument>
+                                                        </Assign.To>
+                                                        <Assign.Value>
+                                                          <InArgument x:TypeArguments="x:Int32">[totalEmailSent+1]</InArgument>
+                                                        </Assign.Value>
+                                                      </Assign>
+                                                    </Sequence>
+                                                  </If.Then>
+                                                </If>
+                                                <If Condition="[BMI &gt; 24]" sap:VirtualizedContainerService.HintSize="521,484" sap2010:WorkflowViewState.IdRef="If_20">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <If.Then>
+                                                    <Sequence sap:VirtualizedContainerService.HintSize="376,337" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[OverweightBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_3" IsBodyHtml="False" IsDraft="False" Subject="[OverweightSubject]" To="[Email]">
+                                                        <ui:SendOutlookMail.Files>
+                                                          <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                                                            <InArgument x:TypeArguments="x:String">WeightLoss.pdf</InArgument>
+                                                          </scg:List>
+                                                        </ui:SendOutlookMail.Files>
+                                                      </ui:SendOutlookMail>
+                                                      <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_13">
+                                                        <Assign.To>
+                                                          <OutArgument x:TypeArguments="x:Int32">[totalEmailSent]</OutArgument>
+                                                        </Assign.To>
+                                                        <Assign.Value>
+                                                          <InArgument x:TypeArguments="x:Int32">[totalEmailSent+1]</InArgument>
+                                                        </Assign.Value>
+                                                      </Assign>
+                                                    </Sequence>
+                                                  </If.Then>
+                                                </If>
                                               </Sequence>
-                                            </If.Then>
-                                          </If>
-                                          <If Condition="[BMI &gt; 24]" sap:VirtualizedContainerService.HintSize="521,484" sap2010:WorkflowViewState.IdRef="If_20">
-                                            <If.Then>
-                                              <Sequence sap:VirtualizedContainerService.HintSize="376,337" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                            </TryCatch.Try>
+                                            <TryCatch.Catches>
+                                              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,104" sap2010:WorkflowViewState.IdRef="Catch`1_6">
                                                 <sap:WorkflowViewStateService.ViewState>
                                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                   </scg:Dictionary>
                                                 </sap:WorkflowViewStateService.ViewState>
-                                                <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[OverweightBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_3" IsBodyHtml="False" IsDraft="False" Subject="[OverweightSubject]" To="[Email]">
-                                                  <ui:SendOutlookMail.Files>
-                                                    <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-                                                      <InArgument x:TypeArguments="x:String">WeightLoss.pdf</InArgument>
-                                                    </scg:List>
-                                                  </ui:SendOutlookMail.Files>
-                                                </ui:SendOutlookMail>
-                                                <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_13">
-                                                  <Assign.To>
-                                                    <OutArgument x:TypeArguments="x:Int32">[totalEmailSent]</OutArgument>
-                                                  </Assign.To>
-                                                  <Assign.Value>
-                                                    <InArgument x:TypeArguments="x:Int32">[totalEmailSent+1]</InArgument>
-                                                  </Assign.Value>
-                                                </Assign>
-                                              </Sequence>
-                                            </If.Then>
-                                          </If>
+                                                <ActivityAction x:TypeArguments="s:Exception">
+                                                  <ActivityAction.Argument>
+                                                    <DelegateInArgument x:TypeArguments="s:Exception" Name="emailDidNotSend" />
+                                                  </ActivityAction.Argument>
+                                                  <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_9" Reason="An error has ocurred while Sending email on outlook" />
+                                                </ActivityAction>
+                                              </Catch>
+                                            </TryCatch.Catches>
+                                          </TryCatch>
                                         </Sequence>
                                       </If.Then>
                                     </If>
-                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="755,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
+                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="835,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
                                       <ui:MultipleAssign.AssignOperations>
                                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_28">
@@ -1597,12 +1967,12 @@
                                 </ActivityAction>
                               </ui:ForEachRow.Body>
                             </ui:ForEachRow>
-                            <ui:CloseTab Browser="[databank]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="847,22" sap2010:WorkflowViewState.IdRef="CloseTab_3" />
+                            <ui:CloseTab Browser="[databank]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="927,22" sap2010:WorkflowViewState.IdRef="CloseTab_3" />
                           </Sequence>
                         </ActivityAction>
                       </ui:OpenBrowser.Body>
                     </ui:OpenBrowser>
-                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="923,253" sap2010:WorkflowViewState.IdRef="MultipleAssign_9">
+                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="1003,253" sap2010:WorkflowViewState.IdRef="MultipleAssign_9">
                       <ui:MultipleAssign.AssignOperations>
                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_38">
@@ -1656,11 +2026,12 @@
                         </scg:List>
                       </ui:MultipleAssign.AssignOperations>
                     </ui:MultipleAssign>
-                    <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[adminBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="923,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_4" IsBodyHtml="False" IsDraft="False" Subject="[adminSubject]" To="[adminEmail]">
+                    <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[accountEmail]" Body="[adminBody]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="1003,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_4" IsBodyHtml="False" IsDraft="False" Subject="[adminSubject]" To="[adminEmail]">
                       <ui:SendOutlookMail.Files>
                         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
                       </ui:SendOutlookMail.Files>
                     </ui:SendOutlookMail>
+                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="1003,59" sap2010:WorkflowViewState.IdRef="MessageBox_9" Text="[adminBody]" TopMost="True" />
                   </Sequence>
                   <FlowStep.Next>
                     <x:Reference>__ReferenceID2</x:Reference>
